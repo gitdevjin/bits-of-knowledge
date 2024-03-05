@@ -1,6 +1,6 @@
 # Computer-science
 
-### How Operating System Works on a hardware level
+### How Operating System Works on a hardware level when there is an interrupt such as keyboard or mouse input
 
 Interrupt Handling by the OS:
 
