@@ -1,4 +1,4 @@
-# Computer-science
+# Computer-Science
 
 ### How Operating System Works on a hardware level when there is an interrupt such as keyboard or mouse input
 
