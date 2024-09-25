@@ -1,4 +1,4 @@
 hello
 ```javascript
-hello world
+console.log("hello world")
 ```
