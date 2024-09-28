@@ -43,7 +43,6 @@ Now, when you merge second into main, Git will create a merge commit (let's call
 
 After Three-Way Merge:
 ```lua
-Copy code
 main:
 M1 --- M2 --- M3 --- M4 (merge)
           \         /
