@@ -19,6 +19,19 @@ poetry init
 ```
 This will prompt you to enter some details about your project, such as the project name, version, description, author, etc. If you want to skip the interactive prompt and use default values, you can use:
 
+### 3-1 If you want to include `.venv` in your project, run the following command
+
+```bash
+poetry config virtualenvs.in-project true
+```
+
+### 3-2 If you already created your project, then run the following commands in order
+```bash
+poetry config virtualenvs.in-project true
+poetry env remove $(poetry env info --path)
+poetry install
+```
+
 ```bash
 poetry new my-poetry-project
 ```
