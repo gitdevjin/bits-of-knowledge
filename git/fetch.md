@@ -41,25 +41,19 @@ After fetching: When you run git fetch origin, Git updates your local references
 Steps:
 Fetch the latest changes:
 
-bash
-Copy code
+```bash
 git fetch origin
+```
 Compare with the fetched remote branch:
 
-bash
-Copy code
+```bash
 git diff origin/main
+```
 This ensures you are comparing your local branch with the most up-to-date version of the remote branch.
 
 
+### Q. `git fetch origin` would this fetch all the branches of origin?
 
-
-
-
-You said:
-okay then, git fetch origin. would this fetch all the branches of origin?
-ChatGPT said:
-ChatGPT
 Yes, running git fetch origin without specifying a branch will fetch all the branches from the origin remote, as well as any other updates (e.g., tags) from the remote repository. However, it will not automatically merge or update any of your local branches; it simply updates the information about the remote branches in your local repository.
 
 Here's what happens when you run git fetch origin:
