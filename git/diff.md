@@ -3,3 +3,10 @@
 ```bash
 git diff <commit-hash>^ <commit-hash>
 ```
+
+
+### How to reset all Uncommitted Changes (Dangerous)
+```bash
+git reset --hard HEAD
+```
+
