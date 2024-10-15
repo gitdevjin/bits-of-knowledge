@@ -24,7 +24,7 @@ x6: Seventh argument
 x7: Eighth argument (usually used for the syscall number)
 svc 0 : call system call
 
-### Hot to start
+### How to start
 run the following to compile in the folder where there is a `hello.s` file
 
 ```bash
@@ -35,3 +35,7 @@ then, run the compiled file `hello`
 ```bash
 ./hello
 ```
+
+### x86_64
+Arguments order
+rdi, rsi, rdx, rcx, r8d, r9d;
