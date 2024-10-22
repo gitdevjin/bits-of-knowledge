@@ -4,6 +4,7 @@
 git diff <commit-hash>^ <commit-hash>
 ```
 
+- `<commit-hash>^` means previous commit
 
 ### How to reset all Uncommitted Changes (Dangerous)
 ```bash

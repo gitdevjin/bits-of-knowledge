@@ -21,7 +21,7 @@ git checkout -b new-branch-name origin/branch-name
 
 
 Scenario 4: No Branch Exists
-Command: git checkout branch-name
+Command: `git checkout branch-name`
 Behavior: If neither a local branch named branch-name nor a corresponding remote branch exists, Git will return an error message indicating that the branch does not exist.
 Summary
 So, the behavior of git checkout branch-name can lead to three possible outcomes:
