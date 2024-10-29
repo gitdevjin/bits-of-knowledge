@@ -12,14 +12,13 @@ Tool Integration: Babel is widely used with other tools, including Webpack, Parc
 Example Use Case:
 Suppose you write code using ES6 features:
 
-javascript
-Copy code
+```javascript
 const greet = (name) => `Hello, ${name}!`;
 export default greet;
+```
 An older browser may not support ES6 syntax. Babel can transpile this code to a more widely compatible version:
 
-javascript
-Copy code
+```javascript
 "use strict";
 
 var greet = function greet(name) {
@@ -27,12 +26,14 @@ var greet = function greet(name) {
 };
 
 module.exports = greet;
+```
+
 Common Babel Configurations:
 Babel is often configured in a .babelrc file or babel.config.json file. Here's a basic example:
 
-json
-Copy code
+```json
 {
   "presets": ["@babel/preset-env"]
 }
+```
 This setup uses @babel/preset-env to automatically include the necessary transformations and polyfills for the specified target environments.
