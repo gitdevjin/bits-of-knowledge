@@ -1,4 +1,4 @@
-### Q. the cpu is 64bits processor but they have a special register or registers for vectorization?
+### Q. the cpu is 64bits processor; do they have a special register or registers for vectorization?
 
 Even though a CPU may be a 64-bit processor in terms of its general-purpose registers and architecture (which means it processes data in chunks of 64 bits for general instructions), it also includes special-purpose vector registers designed specifically for handling SIMD (Single Instruction, Multiple Data) operations.
 
@@ -12,8 +12,14 @@ General-purpose operations: 64-bit registers for normal instructions.
 SIMD/vectorized operations: Larger, special-purpose registers (like 512-bit ZMM registers in AVX-512) for parallel processing of multiple data elements at once.
 
 
-### aarch64 assembly
+### How to access the aarch64 server
 
+```bash
+ssh username@aarch64-003.spo600.cdot.systems
+```
+
+### aarch64 assembly
+```sql
 x0: First argument
 x1: Second argument
 x2: Third argument
@@ -23,19 +29,21 @@ x5: Sixth argument
 x6: Seventh argument
 x7: Eighth argument (usually used for the syscall number)
 svc 0 : call system call
-
+```
 ### How to start
-run the following to compile in the folder where there is a `hello.s` file
+Run the following command to compile in the folder where there is a `hello.s` file
 
 ```bash
 make
 ```
 
-then, run the compiled file `hello`
+Then, run the compiled file `hello`
 ```bash
 ./hello
 ```
 
 ### x86_64
-Arguments order
+Arguments order for function call
+```sql
 rdi, rsi, rdx, rcx, r8d, r9d;
+```
