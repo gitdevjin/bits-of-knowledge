@@ -7,9 +7,9 @@ Behavior: If a local branch named branch-name exists, Git will switch you to tha
 
 Scenario 2: Remote Branch Exists, No Local Branch
 Command: git checkout branch-name
-Behavior: If there is no local branch named branch-name, but there is a corresponding remote branch (e.g., origin/branch-name), Git will:
+Behavior: If there is no local branch named branch-name, but there is a corresponding remote branch (e.g., `origin/branch-name`), Git will:
 Create a new local branch named branch-name.
-Set it to track the remote branch (origin/branch-name).
+Set it to track the remote branch (`origin/branch-name`).
 Switch you to this new local branch.
 
 Scenario 3: if there is the same name branch on local,
