@@ -1,0 +1,204 @@
+diff --git a/git/action.md b/git/action.md
+new file mode 100644
+index 0000000..e69de29
+diff --git a/git/remote.md b/git/remote.md
+index ee75f61..11fa671 100644
+--- a/git/remote.md
++++ b/git/remote.md
+@@ -1 +1,100 @@
+-Remote Workflow Scenarioes.
+\ No newline at end of file
++# Remote Bracnh Workflow Scenarioes.
++
++## Work on Others' Repo
++
++### 1. Fork the repository that you want to work on
++
++### 2. Clone the repository
++```bash
++git clone https://github.com/gitdevjin/addcom.git
++```
++
++### 3. Create a new issue branch (do this in the main branch)
++```bash
++git checkout -b issue-5
++```
++
++## When the forked repo is behind the upstream branch
++
++### 1. Add the original repo as remote branch(upstream)
++```bash
++git remote add <name-it-whatever-you-want> <upstream-repo-url>
++# For example:
++git remote add upstream https://github.com/arilloid/addcom.git
++```
++
++### 2. Fetch the upstream's branches
++```bash
++git fetch upstream
++```
++
++### 3-a Sync your main branch to the upstream's main branch
++```bash
++git checkout main
++git merge upstream/main --ff-only
++# or you can just try merging it and solve the conflicts
++# It's better to leave the main branch of the forked repo untouched,
++# and always work on a new branch.
++git merge upstream/main
++```
++
++### 3-a Create a new branch to work on for a new feature or a bug
++```bash
++git checkout -b <new-issue-name>
++```
++
++This is a slightly different scenario. This will leave your main branch behind the upstream
++### 3-b. Checkout a new branch to work on from the upstream branch (Directly checkout from upstream)
++```bash
++git checkout -b <new-issue-name> <remote-branch-name>/<branchname>
++# For example:
++git checkout -b add-more-tests upstream/main
++```
++
++### 4. Push the changes into your forked origin repo
++```bash
++git add <changed-files>
++git commit -m "your commit messages"
++git push origin <your-issue-branch-name>
++```
++
++
++
++## Reviewing and Testing Pull Request
++
++### 1. Add the remote forked repo (your repo forked by the person)
++```bash
++$ git remote add <name-of-student> <https://git-url-of-other-studnet-fork.git>
++```
++
++### 2. Fetch the Remote branches
++```bash
++$ git fetch <name-of-student>
++```
++
++### 3. Create a new branch for reviewing the branch where the Pull Request is opened
++```bash
++$ git checkout -b <branch-name> <name-of-student>/<branch-name>
++```
++
++### 4. Checkout to the Iusse branch and pull the latest changes
++```bash
++$ git checkout issue-6
++$ git pull <name-of-student> issue-6
++```
++
++### 5. Merge the Pull Request into your main branch
++```bash
++$ git fetch <name-of-student>
++$ git checkout main
++$ git merge <student-name>/issue-6
++$ git push origin main
++```
++
++Merging the work and pushing to the main branch should automatically close the pull request.
++
++### Tip
++```bash
++git remote -v
++```
++This will show the remote branches and their url
+diff --git a/python/poetry.md b/python/poetry.md
+index e2dc430..fac4b72 100644
+--- a/python/poetry.md
++++ b/python/poetry.md
+@@ -60,4 +60,9 @@ Replace script.py with the name of your Python script.
+ If you have setted a script-running command in pyproject.toml file, you can run it as follows:
+ ```bash
+ poetry run codemage
++```
++
++### 7. If you build it, you can run it without `poetry run`
++```bash
++poetry build
+ ```
+\ No newline at end of file
+diff --git a/python/testing.md b/python/testing.md
+index 93e507b..213f6af 100644
+--- a/python/testing.md
++++ b/python/testing.md
+@@ -90,4 +90,71 @@ mock_os_exists: Mocks os.path.exists(), intercepting the call to check whether t
+ mock_toml_load: Mocks toml.load(), allowing you to simulate loading a configuration file without actually reading from the file system. You can control the returned content of the "file" and verify that it was called with the correct path.
+ Correct test behavior:
+ os.path.exists() is mocked to simulate whether the file exists, and you check that it was called with the correct path.
+-toml.load() is mocked to simulate reading the file contents, and you check that it was called with the correct path.
+\ No newline at end of file
++toml.load() is mocked to simulate reading the file contents, and you check that it was called with the correct path.
++
++
++## Test Code Style That I prefer
++```python
++import pytest
++from unittest.mock import mock_open, patch
++from app.core.file_operations import read_toml, find_toml, get_config
++
++def test_read_toml_good():
++    toml_content = b"""
++    fake_api_key = "abcdefg12345678"
++    fake_model_name = "seneca-ai"
++    """
++    
++    with patch("builtins.open", mock_open(read_data=toml_content)):
++        result = read_toml("good.toml") 
++        
++        assert result == {'fake_api_key': 'abcdefg12345678', 'fake_model_name': 'seneca-ai'}
++
++
++def test_read_toml_raises_ioerror():
++    with patch("builtins.open", mock_open()) as mock_file:
++        mock_file.side_effect = IOError("File not found")
++
++        with pytest.raises(RuntimeError, match="Error reading TOML file"):
++            read_toml("non_existent_file.toml")
++
++
++def test_find_toml_found():
++    with patch("os.path.expanduser", return_value="/mock/home/dir"):
++        # Mock the list of files in the directory to contain the expected TOML file
++        with patch("os.listdir", return_value=["addcom_config.toml", "other_file.txt"]):
++            result = find_toml()
++            # Check that the correct path is returned
++            assert result == "/mock/home/dir/addcom_config.toml"
++
++
++def test_find_toml_not_found():
++    with patch("os.path.expanduser", return_value="/mock/home/dir"):
++        with patch("os.listdir", return_value=["other_file.txt", "another_file.txt"]):
++            result = find_toml()
++            assert result is None
++
++
++def test_get_config_with_valid_toml():
++    # Mock the `find_toml` function to return a valid file path
++    with patch("app.core.file_operations.find_toml", return_value="valid_toml_path.toml"):
++        # Mock the `read_toml` function to return mock config data
++        mock_toml_data = {"database": {"user": "admin", "password": "secret"}}
++        with patch("app.core.file_operations.read_toml", return_value=mock_toml_data):
++            # Call the function under test
++            result = get_config()
++
++            # Assert that the result matches the expected mock config
++            assert result == mock_toml_data
++
++# Test case 2: Test when TOML file is not found
++def test_get_config_with_no_toml():
++    # Mock the `find_toml` function to return None (file not found)
++    with patch("app.core.file_operations.find_toml", return_value=None):
++        # Call the function under test
++        result = get_config()
++
++        # Assert that the result is None when no TOML file is found
++        assert result is None
++
++```
+\ No newline at end of file
