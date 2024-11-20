@@ -91,3 +91,70 @@ mock_toml_load: Mocks toml.load(), allowing you to simulate loading a configurat
 Correct test behavior:
 os.path.exists() is mocked to simulate whether the file exists, and you check that it was called with the correct path.
 toml.load() is mocked to simulate reading the file contents, and you check that it was called with the correct path.
+
+
+## Test Code Style That I prefer
+```python
+import pytest
+from unittest.mock import mock_open, patch
+from app.core.file_operations import read_toml, find_toml, get_config
+
+def test_read_toml_good():
+    toml_content = b"""
+    fake_api_key = "abcdefg12345678"
+    fake_model_name = "seneca-ai"
+    """
+    
+    with patch("builtins.open", mock_open(read_data=toml_content)):
+        result = read_toml("good.toml") 
+        
+        assert result == {'fake_api_key': 'abcdefg12345678', 'fake_model_name': 'seneca-ai'}
+
+
+def test_read_toml_raises_ioerror():
+    with patch("builtins.open", mock_open()) as mock_file:
+        mock_file.side_effect = IOError("File not found")
+
+        with pytest.raises(RuntimeError, match="Error reading TOML file"):
+            read_toml("non_existent_file.toml")
+
+
+def test_find_toml_found():
+    with patch("os.path.expanduser", return_value="/mock/home/dir"):
+        # Mock the list of files in the directory to contain the expected TOML file
+        with patch("os.listdir", return_value=["addcom_config.toml", "other_file.txt"]):
+            result = find_toml()
+            # Check that the correct path is returned
+            assert result == "/mock/home/dir/addcom_config.toml"
+
+
+def test_find_toml_not_found():
+    with patch("os.path.expanduser", return_value="/mock/home/dir"):
+        with patch("os.listdir", return_value=["other_file.txt", "another_file.txt"]):
+            result = find_toml()
+            assert result is None
+
+
+def test_get_config_with_valid_toml():
+    # Mock the `find_toml` function to return a valid file path
+    with patch("app.core.file_operations.find_toml", return_value="valid_toml_path.toml"):
+        # Mock the `read_toml` function to return mock config data
+        mock_toml_data = {"database": {"user": "admin", "password": "secret"}}
+        with patch("app.core.file_operations.read_toml", return_value=mock_toml_data):
+            # Call the function under test
+            result = get_config()
+
+            # Assert that the result matches the expected mock config
+            assert result == mock_toml_data
+
+# Test case 2: Test when TOML file is not found
+def test_get_config_with_no_toml():
+    # Mock the `find_toml` function to return None (file not found)
+    with patch("app.core.file_operations.find_toml", return_value=None):
+        # Call the function under test
+        result = get_config()
+
+        # Assert that the result is None when no TOML file is found
+        assert result is None
+
+```

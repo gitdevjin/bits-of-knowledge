@@ -61,3 +61,8 @@ If you have setted a script-running command in pyproject.toml file, you can run 
 ```bash
 poetry run codemage
 ```
+
+### 7. If you build it, you can run it without `poetry run`
+```bash
+poetry build
+```
