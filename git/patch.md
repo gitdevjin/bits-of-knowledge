@@ -9,6 +9,11 @@ If you just use the following, then it will just compare HEAD with previous comm
 git diff > mypatch.patch
 ```
 
+### Hot to apply patch file
+``` bash
+git apply hello.patch
+```
+
 ### You can use `format-patch`
 
 ```bash
@@ -28,6 +33,9 @@ c4
 git format-patch c4 > new-version.patch
 ```
 This will create a patch file set, you can apply to a project which is sitting on `c4` commit.
-The patch file set contains multiple `.patch` files, one is for information of other commits and its order that will be applied. The others are actually `diff` result of each commits
+The patch file set contains multiple `.patch` files, one is for information of other commits and its order that will be applied. The others are actually `diff` result of each commits.
+
+
+
 
 
