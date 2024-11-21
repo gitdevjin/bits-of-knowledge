@@ -158,3 +158,51 @@ def test_get_config_with_no_toml():
         assert result is None
 
 ```
+
+
+Yes, that's correct! The side_effect property of a mock allows you to define a sequence of return values or behaviors for successive calls to the mocked function. Each time the mocked function is called, it will return the next value in the side_effect list.
+
+In your case:
+
+The first element of side_effect corresponds to the first call to toml.load, which handles the main config file (~/.codemage-config.toml).
+The second element corresponds to the second call to toml.load, which processes the pyproject.toml file.
+If there is a third call to toml.load, you would indeed need to add a third element to the side_effect list.
+
+Example with Three Calls to toml.load
+Let's say you also load a third TOML file, perhaps settings.toml. You'd structure your test like this:
+
+python
+Copy code
+@patch("os.path.exists")
+@patch("toml.load")
+@patch("builtins.open", new_callable=mock_open)
+def test_load_config_with_three_toml_files(self, mock_file, mock_toml_load, mock_os_exists):
+    # Simulate file existence
+    mock_os_exists.return_value = True
+
+    # Simulate the contents of three files
+    mock_toml_load.side_effect = [
+        {"language": "Python", "OPENROUTER_API_KEY": "mock_openrouter_api_key"},  # ~/.codemage-config.toml
+        {"tool": {"poetry": {"version": "0.9.0"}}},  # pyproject.toml
+        {"theme": "dark", "notifications": True},  # settings.toml
+    ]
+
+    # Call the function under test
+    config = load_config()
+
+    # Assertions for the calls and combined config
+    mock_file.assert_any_call("pyproject.toml", "r")
+    mock_file.assert_any_call("settings.toml", "r")
+    assert config == {
+        "language": "Python",
+        "OPENROUTER_API_KEY": "mock_openrouter_api_key",
+        "version": "0.9.0",
+        "theme": "dark",
+        "notifications": True,
+    }
+Key Details:
+side_effect Array: Each element in the array is returned in order with successive calls to toml.load. If you have a third call, you need to include a third object in side_effect.
+
+Order Matters: The side_effect list determines the sequence of return values. If your code calls toml.load more times than there are elements in side_effect, it will raise an error (StopIteration).
+
+Ensure File Mocking Matches: The mock_file must also simulate the files (pyproject.toml, settings.toml, etc.) being opened in the correct order. Use mock_file.assert_any_call() to verify each file was opened.

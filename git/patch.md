@@ -33,7 +33,14 @@ c4
 git format-patch c4 > new-version.patch
 ```
 This will create a patch file set, you can apply to a project which is sitting on `c4` commit.
-The patch file set contains multiple `.patch` files, one is for information of other commits and its order that will be applied. The others are actually `diff` result of each commits.
+The patch file set contains multiple `.patch` files, one is meta file for information of other commits and its order that will be applied. The others are actually `diff` result of each commits.
+
+
+#### how to apply
+```bash
+git am < 0001-git-remote-workflow-secnarios-added.patch
+```
+You must not apply the meta file such as `hello-format.patch`
 
 
 

@@ -46,7 +46,7 @@ Create an annotated tag with the same name:
 
 ```bash
 git tag -a v0.9.0 -m "Release version 0.9.0"
-git push --follow-tags
+git push --follow-tags # push the commit with the tag.
 ```
 
 ### Summary
