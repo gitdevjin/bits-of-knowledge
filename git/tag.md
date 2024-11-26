@@ -49,6 +49,9 @@ git tag -a v0.9.0 -m "Release version 0.9.0"
 git push --follow-tags # push the commit with the tag.
 ```
 
+The --follow-tags option only pushes annotated tags, not lightweight tags
+
+
 ### Summary
 - Lightweight tags are simple and minimal but lack metadata. Use them for temporary or private purposes.
 - Annotated tags are the standard for releases because they include important details and are more descriptive.
