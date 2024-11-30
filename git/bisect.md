@@ -37,17 +37,17 @@ Imagine you have a repository with a bug, and you know it was introduced between
 
 Start bisecting:
 
-bash
-Copy code
+```bash
 git bisect start
 git bisect bad  # current commit with the bug
 git bisect good <commit-hash>  # last known good commit
+```
 Git checks out a commit in the middle:
 
 If the bug is present, mark it as bad:
-bash
-Copy code
+```bash
 git bisect bad
+```
 If the bug is not present, mark it as good:
 bash
 Copy code
