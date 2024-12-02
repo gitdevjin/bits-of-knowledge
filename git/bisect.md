@@ -7,11 +7,11 @@ Steps to Use git bisect
 Start Bisecting:
 First, tell Git where to start by specifying the "bad" (current commit with the issue) and the "good" commit (a commit where the issue did not exist).
 
-bash
-Copy code
+```bash
 git bisect start
 git bisect bad  # this is the current commit with the bug
 git bisect good <commit-hash>  # replace <commit-hash> with a commit where the bug didn't occur
+```
 Testing the Commit:
 After running the above, Git will check out a commit in the middle of the "good" and "bad" range. You now need to test if the bug is present or not in this commit.
 
@@ -29,9 +29,10 @@ Git will continue narrowing down the commit range by halving the range each time
 Finish Bisecting:
 Once Git has narrowed down the commits and finds the exact commit that introduced the bug, it will tell you which commit is the culprit. You can then reset your repository back to the branch or commit you were working on:
 
-bash
-Copy code
+
+```bash
 git bisect reset
+```
 Example Workflow
 Imagine you have a repository with a bug, and you know it was introduced between two commits. Here's how you might use git bisect to find the culprit commit.
 
@@ -56,9 +57,10 @@ Git narrows the search and keeps checking out the middle commits. After several 
 
 Reset the bisect:
 
-bash
-Copy code
+```bash
 git bisect reset
+```
+
 Why Use git bisect?
 Efficient Bug Detection: Instead of manually checking each commit, git bisect uses binary search to quickly narrow down the problematic commit.
 Automatable: You can automate the process of testing commits by using a script with git bisect run.
@@ -66,8 +68,8 @@ Precise: It helps you precisely locate the commit where a bug was introduced, sa
 Advanced Usage - Bisecting Automatically with a Script
 If you have a way to test whether the bug is present (for example, a script that can run tests), you can automate the bisecting process. For example:
 
-bash
-```
+
+```bash
 git bisect start
 git bisect bad
 git bisect good <commit-hash>
