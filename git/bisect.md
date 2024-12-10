@@ -16,13 +16,13 @@ Testing the Commit:
 After running the above, Git will check out a commit in the middle of the "good" and "bad" range. You now need to test if the bug is present or not in this commit.
 
 If the bug is present in the checked-out commit, mark it as bad:
-bash
-Copy code
+```bash
 git bisect bad
+```
 If the bug is not present, mark it as good:
-bash
-Copy code
+```bash
 git bisect good
+```
 Repeat:
 Git will continue narrowing down the commit range by halving the range each time, checking out the middle commit for you to test. You'll continue to mark the commits as either "good" or "bad" based on your testing.
 
@@ -50,9 +50,9 @@ If the bug is present, mark it as bad:
 git bisect bad
 ```
 If the bug is not present, mark it as good:
-bash
-Copy code
+```bash
 git bisect good
+```
 Git narrows the search and keeps checking out the middle commits. After several steps, you’ll reach the commit that introduced the bug.
 
 Reset the bisect:
