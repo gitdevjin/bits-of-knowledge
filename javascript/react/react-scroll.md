@@ -34,35 +34,99 @@ export default function HomePage() {
 
 ```javascript
 ## React Fullpage
-import ReactFullpage from "@fullpage/react-fullpage";
+import { useRef, useEffect, useState } from "react";
+import Footer from "../../Footer/Footer";
+import DotScroll from "./DotScroll";
+import SectionOne from "./SectionOne";
 
 export default function HomePage() {
+  const outerRef = useRef();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const getNextPage = (scrollTop, deltaY) => {
+    const pageHeight = window.innerHeight;
+
+    if (deltaY > 0) {
+      // Scrolling down
+      if (scrollTop < pageHeight) return 2;
+      if (scrollTop < pageHeight * 2) return 3;
+      if (scrollTop < pageHeight * 3) return 4;
+      return 4; // Already at the last page
+    } else {
+      // Scrolling up
+      if (scrollTop < pageHeight) return 1; // Already at the first page
+      if (scrollTop < pageHeight * 2) return 1;
+      if (scrollTop < pageHeight * 3) return 2;
+      return 3;
+    }
+  };
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      e.preventDefault();
+      if (isScrolling) return;
+
+      const CUSHION_HEIGHT = 5;
+      const pageHeight = window.innerHeight;
+      const { deltaY } = e;
+      const { scrollTop } = outerRef.current;
+
+      const nextPage = getNextPage(scrollTop, deltaY);
+
+      setIsScrolling(true);
+
+      // Scroll logic
+      const scrollPosition =
+        (nextPage - 1) * pageHeight + CUSHION_HEIGHT * (nextPage - 1);
+
+      outerRef.current.scrollTo({
+        top: scrollPosition,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      setCurrentPage(nextPage);
+
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 1400);
+    };
+
+    const outerRefCurrent = outerRef.current;
+    outerRefCurrent.addEventListener("wheel", handleWheel);
+
+    return () => {
+      outerRefCurrent.removeEventListener("wheel", handleWheel);
+    };
+  }, [isScrolling]);
+
   return (
-    <ReactFullpage
-      navigation
-      scrollingSpeed={1000} // Scroll speed in milliseconds
-      render={({ state, fullpageApi }) => (
-        <ReactFullpage.Wrapper>
-          {/* Section 1 */}
-          <div className="section">
-            <h1 className="text-white">Section 1</h1>
-            <p>Content for Section 1</p>
-          </div>
-          {/* Section 2 */}
-          <div className="section" style={{ backgroundColor: "#333" }}>
-            <h1 className="text-white">Section 2</h1>
-            <p>Content for Section 2</p>
-          </div>
-          {/* Section 3 */}
-          <div className="section" style={{ backgroundColor: "#666" }}>
-            <h1 className="text-white">Section 3</h1>
-            <p>Content for Section 3</p>
-          </div>
-        </ReactFullpage.Wrapper>
-      )}
-    />
+    <main className="h-screen overflow-hidden m-0">
+      <div ref={outerRef} className="h-screen overflow-y-auto fullpage-wrapper">
+        <DotScroll currentPage={currentPage}></DotScroll>
+        <div className="h-screen flex justify-center items-center ">
+          <SectionOne></SectionOne>
+        </div>
+        <div className="w-[100%] h-[5px] "></div> {/* Divider */}
+        <div className="h-screen flex justify-center items-center text-white text-3xl">
+          2
+        </div>
+        <div className="w-[100%] h-[5px] "></div> {/* Divider */}
+        <div className="h-screen flex justify-center items-center bg-purple-300">
+          3
+        </div>
+        <div className="w-[100%] h-[5px] "></div> {/* Divider */}
+        <div className="h-screen flex justify-center items-center bg-green-200">
+          <Footer />
+        </div>
+      </div>
+    </main>
   );
 }
+
+// indigo color
+
 
 // indigo color
 
