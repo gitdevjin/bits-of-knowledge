@@ -8,7 +8,7 @@ Examples:
 
 - `npm install` (or just `npm i`): Installs the dependencies listed in your `package.json`.
 - `npm init`: Initializes a new Node.js project by creating a `package.json` file.
-- `npm test`: Runs the test scripts defined in your `package.json`. (Note: The default behavior is to run npm run test, which can be overridden by defining a test script.)
+- `npm test`: Runs the test scripts defined in your `package.json`. (Note: The default behavior is to run `npm run test`, which can be overridden by defining a test script.)
 - `npm update`: Updates the installed packages.
 - `npm run <command>`: This is used to run a custom script defined in the scripts section.
 

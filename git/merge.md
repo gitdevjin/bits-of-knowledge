@@ -9,9 +9,7 @@ Before Merge:
 ```sql
 main:
 M1 --- M2
-```
 
-```sql
 second:
       M2 --- S1 --- S2
 ```
@@ -34,8 +32,7 @@ Before Merge:
 ```sql
 main:
 M1 --- M2 --- M3
-```
-```sql
+
 second:
       M2 --- S1 --- S2
 ```
