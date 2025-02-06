@@ -1,4 +1,4 @@
-# Remote Bracnh Workflow Scenarioes.
+# Remote Branch Workflow Scenarioes.
 
 ## Work on Others' Repo
 
