@@ -3,8 +3,7 @@ Let's use a practical example with Express, a popular Node.js web framework.
 Using require with CommonJS:
 This is typically seen in older or server-side Node.js code.
 
-javascript
-Copy code
+```javascript
 // server.js
 const express = require('express'); // CommonJS require
 const app = express();
@@ -16,11 +15,12 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
+```
+
 Using import with ES Modules (ESM):
 In ESM, import is used. This is commonly seen in modern front-end frameworks or if "type": "module" is specified in package.json.
 
-javascript
-Copy code
+```javascript
 // server.js
 import express from 'express'; // ES Module import
 const app = express();
@@ -32,6 +32,8 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
+```
+
 Key Differences
 Syntax:
 
