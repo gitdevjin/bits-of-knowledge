@@ -82,3 +82,21 @@ res.json({ success: true, user: { name: "John Doe", email: "john@example.com" } 
 
 
 This flow ensures that the user's credentials and sensitive information are never directly handled by the frontend, providing better security by moving validation to the backend.
+
+*** 
+
+### Q. Can I issue a new token to prevent from sending a request to google every time I need the user's info or profile.
+You're absolutely right! Continuously validating the `access_token` with Google for every request is inefficient. Instead, we should issue our own JWT after verifying Google's `access_token`, which allows us to manage authentication independently.
+
+### Updated Flow Using JWT Instead of Google Validation on Every Request
+#### 1. **Frontend**: Gets `access_token` from Google OAuth.
+#### 2. **Frontend** → **Backend**: Sends `access_token` to `/api/auth/google`.
+#### 3. Backend:
+- Verifies the `access_token` with Google.
+- Creates our own JWT based on Google's response.
+- Stores the JWT as an HTTP-only cookie for future authentication.
+
+#### 4. Maintaining Login Status:
+The frontend makes authenticated requests.
+The backend validates the JWT (without contacting Google again).
+#### 5. Logout: Clears the cookie.
