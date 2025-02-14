@@ -2,7 +2,7 @@
 
 If you create a tag without the -a option, it will be a lightweight tag instead of an annotated tag. Here's what happens when you do this:
 
-What Is a Lightweight Tag?
+### What Is a Lightweight Tag?
 A lightweight tag is essentially just a pointer to a specific commit. Unlike an annotated tag, it doesn't have additional metadata, such as:
 
 - A tagger's name
