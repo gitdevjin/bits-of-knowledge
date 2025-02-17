@@ -32,9 +32,6 @@ poetry env remove $(poetry env info --path)
 poetry install
 ```
 
-```bash
-poetry new my-poetry-project
-```
 
 ### 4. Install Dependencies: After initializing your project, you can add dependencies using:
 
