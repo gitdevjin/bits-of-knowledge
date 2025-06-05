@@ -66,7 +66,7 @@ app.post('/upload', upload.single('image'), (req, res) => {
 🧠 Summary Table:
 |Part Type |	What Multer Does |	Where It Goes |
 |----------------------|----------------------------------------|---------------------------------|
-|File (has filename) |	Saves to disk or memory	req.file or req.files|
+|File (has filename) |	Saves to disk or memory	|req.file or req.files|
 |Text Field |	Parses as string, adds to request body |	req.body.fieldName |
 
 
