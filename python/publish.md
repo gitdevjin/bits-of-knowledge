@@ -2,7 +2,7 @@
 #### 1. Create PyPI account and generate API_KEY
 
 #### 2. Set up the API_KEY in `config.toml` file for poetry.
-Poetry `config.toml` for mac is located in ~/Library/Application Support/pypoetry
+Poetry `config.toml` for mac is located in `~/Library/Application Support/pypoetry`
 
 ```toml
 [pypi]
